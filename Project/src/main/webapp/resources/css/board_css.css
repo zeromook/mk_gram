@@ -1,0 +1,281 @@
+@CHARSET "UTF-8";
+
+@font-face {
+	font-family: 'GmarketLight';
+	src: url(../font/GmarketSansTTFLight.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'GmarketMiddle';
+	src: url(../font/GmarketSansTTFMedium.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'GmarketBold';
+	src: url(../font/GmarketSansTTFBold.ttf) format('truetype');
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: GmarketMiddle;
+}
+
+.totalWrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.header {
+	position: fixed;
+	width: 100%;
+	z-index: 5;
+	background-color: white;
+	border: 1px solid lightgray;
+	margin-top: -8px;
+}
+
+.header_container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 60px;
+}
+
+.header_bar {
+	display: flex;
+	width: 20%;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+#searchimg {
+	position: absolute;
+	width: 17px;
+	top: 10px;
+	right: 12px;
+	margin: 0;
+	cursor: pointer;
+}
+
+.icons img {
+	cursor: pointer;
+}
+
+.search_bar {
+	width: 100%;
+	border: 1px solid #bbb;
+	border-radius: 8px;
+	padding: 10px 12px;
+	font-size: 14px;
+}
+
+.fa-search {
+	order: -1;
+}
+
+.icons {
+	display: flex;
+	margin-right: 170px;
+}
+
+.fa-home, .fa-send, .fa-add, .fa-heart {
+	margin-right: 17px;
+}
+
+.fa-home>img, .fa-send>img, .fa-add>img, .fa-heart>img {
+	width: 22px;
+	height: 22px;
+	border-radius: 70%;
+}
+
+.profile_img {
+	width: 22px;
+	height: 22px;
+	border-radius: 70%;
+	margin-right: 17px;
+}
+
+.title {
+	position: relative;
+	padding: 7px 0.5rem;
+	text-align: center;
+	margin-left: 150px;
+	font-family: GmarketBold;
+	font-size: 25px;
+}
+
+.title::after {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	content: '';
+	width: 100%;
+	height: 6px;
+	border-radius: 3px;
+	background-image: -webkit-linear-gradient(right, #00b0ff 0%, #00e676 100%);
+	background-image: linear-gradient(to left, #00b0ff 0%, #00e676 100%);
+}
+
+.section {
+	width: 100%;
+	height: 100%;
+}
+
+.section .main {
+	width: 68%;
+	height: 100%;
+	float: left;
+	box-sizing: border-box;
+	border: solid 1px black;
+	margin-top: 94px;
+}
+
+#profileInfo>p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.section .side {
+	width: 32%;
+	height: 100%;
+	margin-top: 94px;
+	float: right;
+	box-sizing: border-box;
+}
+
+.profile {
+	display: flex;
+	flex-direction: row;
+	margin-left: 30px;
+	align-items: center;
+	margin-top: 25px;
+}
+
+#friendProfileInfo {
+	margin-left: 18px;
+	width: 217px;
+}
+
+#friendProfileInfo>p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.friendProfile_img {
+	width: 40px;
+	height: 40px;
+	border-radius: 70%;
+	margin-right: 17px;
+}
+
+#friendInviteBtn {
+	cursor: pointer;
+	color: royalblue;
+	font-family: 'GmarketBold';
+}
+
+.profileImg {
+	border-radius: 70%;
+	width: 25%;
+	margin-right: 15px;
+}
+
+#myinfoList {
+	top: 40px;
+	background-color: white;
+	border: solid 1px grey;
+	border-radius: 30px;
+	position: fixed;
+	right: 137px;
+	display: none;
+}
+
+#myinfoUl {
+	list-style: none;
+	padding: 7px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#myinfoUl>li {
+	padding: 5px;
+	font-family: 'GmarketLight';
+	cursor: pointer;
+}
+
+#myheartList {
+	top: 40px;
+	background-color: white;
+	border: solid 1px grey;
+	border-radius: 30px;
+	position: fixed;
+	right: 54px;
+	display: none;
+}
+
+#myheartUl {
+	list-style: none;
+	padding: 7px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#myheartUl>li {
+	padding: 5px;
+	font-family: 'GmarketLight';
+	cursor: pointer;
+}
+
+#accessBtn {
+	position: absolute;
+	right: 15px;
+	color: blue;
+	font-family: 'GmarketMiddle';
+}
+
+#addBoardDiv, #addBoardDiv2 {
+	z-index: 10;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+#addBoardBox, #addBoardBox2 {
+	background-color: white;
+	width: 55%;
+	position: absolute;
+	height: 55%;
+	right: 50%;
+	top: 25%;
+	border: 1px solid black;
+	left: 25%;
+	text-align: center;
+}
+
+#xBtn {
+	display: inline;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+	font-size: 30px;
+}
+
+.dragFileDiv {
+	outline: 2px dashed #92b0b3;
+	outline-offset: -10px;
+	text-align: center;
+	transition: all .15s ease-in-out;
+	width: 100%;
+	height: 70%;
+	background-color: azure;
+}
+
+input::placeholder, textarea::placeholder {
+	font-family: GmarketLight;
+}

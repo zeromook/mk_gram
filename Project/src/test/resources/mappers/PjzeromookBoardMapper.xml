@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PjzeromookBoardDAO">
+
+	<select id="PjzeromookBoardDAO.PjzeromookBoardMine" parameterType="UserVO" resultType="BoardVO">
+		SELECT *
+		  FROM BOARD
+		 WHERE user_id = #{user_id}
+	</select>
+
+
+	<select id="PjzeromookBoardDAO.PjzeromookBoardList" parameterType="UserVO" resultType="BoardVO">
+		SELECT *
+		  FROM BOARD
+		 WHERE user_id IN (SELECT user_id
+		                     FROM FRIEND
+		                    WHERE friend_id = #{user_id})
+		    OR user_id = #{user_id}
+	</select>
+
+
+	<insert id="PjzeromookBoardDAO.PjzeromookBoardUploadFile" parameterType="BoardVO">
+		INSERT INTO BOARD(board_no,user_id,user_name,board_fname,board_realfname,board_fsize,board_insdt)
+		VALUES ((SELECT MAX(board_no)+1 FROM BOARD a),#{user_id},#{user_name},#{board_fname},#{board_realfname},#{board_fsize},NOW())
+	</insert>
+	
+	
+	<select id="PjzeromookBoardDAO.PjzeromookBoardNoCheck" parameterType="BoardVO" resultType="integer">
+		SELECT board_no
+		  FROM BOARD
+		 WHERE user_id = #{user_id}
+		   AND board_realfname = #{board_realfname}
+      ORDER BY board_insdt
+         LIMIT 1
+	</select>
+	
+	
+	<update id="PjzeromookBoardDAO.PjzeromookBoardUpload" parameterType="BoardVO">
+		UPDATE BOARD
+		   SET board_sj = #{board_sj},
+		       board_cn = #{board_cn}
+		 WHERE board_no = #{board_no}
+	</update>
+	
+	
+	<delete id="PjzeromookBoardDAO.PjzeromookBoardDeleteFile" parameterType="BoardVO">
+		DELETE
+		  FROM BOARD
+		 WHERE board_no = #{board_no}
+	</delete>
+	
+	<select id="PjzeromookBoardDAO.PjzeromookBoardLikeCnt" parameterType="BoardVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD_LIKE
+		 WHERE board_no = #{board_no}
+		   AND user_id = #{user_id}
+	</select>
+
+	<select id="PjzeromookBoardDAO.PjzeromookBoardCommentCnt" parameterType="BoardVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD_COMMENT
+		 WHERE board_no = #{board_no}
+		   AND user_id = #{user_id}
+	</select>
+	 
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PjzeromookUserDAO">
+
+
+
+	<!-- 
+		이메일 중복확인 체크
+	 -->
+	<select id="PjzeromookUserDAO.PjzeromookUserJoinEmailCheck" parameterType="UserVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM USER
+		 WHERE USER_ID = #{user_email}
+	</select>
+
+	<!-- 
+		아이디 중복확인 체크
+	 -->
+	<select id="PjzeromookUserDAO.PjzeromookUserJoinIDCheck" parameterType="UserVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM USER
+		 WHERE USER_ID = #{user_id}
+	</select>
+
+
+
+	<!-- 
+		로그인
+	 -->
+	<select id="PjzeromookUserDAO.PjzeromookUserLogin" parameterType="UserVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM USER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_PASSWORD = #{user_password}
+	</select>
+
+	<!-- 
+		유저정보저장
+	 -->
+	<select id="PjzeromookUserDAO.PjzeromookUserInfo" parameterType="UserVO" resultType="UserVO">
+		SELECT *
+		  FROM USER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_PASSWORD = #{user_password}
+	</select>
+
+
+	<!-- 
+		회원가입
+	 -->
+	<insert id="PjzeromookUserDAO.PjzeromookUserJoin" parameterType="UserVO">
+		INSERT INTO USER(user_email, user_name, user_phone, user_zipcode, user_address,
+						 user_detail_address,
+						 <if test="user_extra_address neq ''.toString()">
+						 	user_extra_address
+						 </if>,
+						 user_id,
+						 user_password)
+		VALUES (#{user_email},
+				#{user_name},
+				#{user_phone},
+				#{user_zipcode},
+				#{user_address},
+				#{user_detail_address},
+				<if test="user_extra_address neq ''.toString()">
+					#{user_extra_address},
+				</if>
+				#{user_id},
+				#{user_password})
+	</insert>
+
+
+	<!-- 
+		본인을 제외한 유저목록	
+	 -->
+	 <select id="PjzeromookUserDAO.PjzeromookUserList" parameterType="UserVO" resultType="UserVO">
+	 	SELECT *
+	 	  FROM USER
+	 	 WHERE user_id NOT IN (SELECT user_id
+	 	                         FROM USER
+	 	                        WHERE user_id IN (SELECT friend_id
+	 	                                            FROM FRIEND
+	 	                                           WHERE user_id = #{user_id})
+	 	                       UNION
+	 	                       SELECT user_id
+	 	                         FROM USER
+	 	                        WHERE user_id IN (SELECT user_id
+	 	                                            FROM FRIEND
+	 	                                           WHERE friend_id = #{user_id}))
+	 	   AND user_id NOT IN (SELECT user_id
+	 	                         FROM USER
+	 	                        WHERE user_id IN (SELECT friend_id
+	 	                                            FROM FRIENDINVITE
+	 	                                           WHERE user_id = #{user_id})
+	 	                       UNION
+	 	                       SELECT user_id
+	 	                         FROM USER
+	 	                        WHERE user_id IN (SELECT user_id
+	 	                                            FROM FRIENDINVITE
+	 	                                           WHERE friend_id = #{user_id}))
+	 	   AND user_id != #{user_id}
+	 	   AND user_id LIKE CONCAT(#{searchKeyword},'%')
+	 </select>
+
+	 
+	 
+	<!-- 
+		친구신청하기
+	 -->
+	 <insert id="PjzeromookUserDAO.pjzeromookFriendInvite" parameterType="UserVO">
+	 	INSERT INTO FRIENDINVITE
+	 	VALUES(#{friend_id},#{user_id})
+	 </insert>
+	 
+	 
+	 
+	 
+	<!-- 
+		내가 받은 친구신청 목록
+	 -->
+	 <select id="PjzeromookUserDAO.PjzeromookReceivedFriendInvite" parameterType="UserVO" resultType="UserVO">
+		SELECT * 
+		  FROM USER
+		 WHERE user_id IN ( SELECT friend_id 
+		  					  FROM FRIENDINVITE
+		 					 WHERE user_id = #{user_id})
+		<if test="allShowInvitedYN neq 'Y'.toString()">
+			LIMIT 5
+		</if>
+	 </select>
+	 
+	 
+	 <!-- 
+		친구신청테이블에서 삭제
+	 -->
+	 <delete id="PjzeromookUserDAO.PjzeromookDeleteFriendInvite" parameterType="UserVO">
+	 	DELETE
+	 	  FROM FRIENDINVITE
+	 	 WHERE user_id = #{user_id}
+	 	   AND friend_id = #{friend_id}
+	 </delete>
+	 
+	 
+	 <!-- 
+		친구 테이블에 추가
+	 -->
+	 <insert id="PjzeromookUserDAO.PjzeromookFriendAccess" parameterType="UserVO">
+	 	INSERT INTO FRIEND
+	 	VALUES (#{user_id} , #{friend_id})
+	 </insert>
+
+	 <!-- 
+		친구 테이블에 추가2
+	 -->
+	 <insert id="PjzeromookUserDAO.PjzeromookFriendAccess2" parameterType="UserVO">
+	 	INSERT INTO FRIEND
+	 	VALUES (#{friend_id} , #{user_id})
+	 </insert>
+
+	 
+	 
+	 <!-- 
+	 	지역 친구 추천
+	  -->
+	 <select id="PjzeromookUserDAO.PjzeromookFriendRecommend" parameterType="UserVO" resultType="UserVO">
+	 	SELECT *
+	 	  FROM USER
+	 	 WHERE user_id IN (SELECT user_id 
+	 	                     FROM USER
+	 	                    WHERE SUBSTRING_INDEX(
+	 	                    			SUBSTRING_INDEX(user_address , "시" , 2) , " " , 2) 
+	 	                    			IN 
+	 	                    			(SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(user_address , "시" , 2)," ",2)FROM USER WHERE user_id = #{user_id}))
+	 	   AND user_id != #{user_id}
+	 	 <if test="allShowRecommendYN neq 'Y'.toString()">
+	 	 	LIMIT 5
+	 	 </if>
+	 </select>
+	 
+	 
+	 <!-- 
+	 	친구의 수
+	  -->
+	  <select id="PjzeromookUserDAO.PjzeromookUserCnt" parameterType="UserVO" resultType="integer">
+	  	SELECT COUNT(*)
+	  	  FROM FRIEND
+	  	 WHERE user_id = #{user_id}
+	  </select>
+	 
+</mapper>
