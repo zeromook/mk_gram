@@ -71,6 +71,11 @@ public class PjzeromookUserServiceImpl implements PjzeromookUserService {
 		return PjzeromookUserDAO.PjzeromookUserCnt(vo);
 	}
 
+	@Override
+	public int pjzeromookUserInfoUpdate(PjzeromookUserVO vo) {
+		return PjzeromookUserDAO.pjzeromookUserInfoUpdate(vo);
+	}
+
 
 	
 

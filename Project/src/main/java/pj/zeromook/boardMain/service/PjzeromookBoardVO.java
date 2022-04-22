@@ -32,6 +32,8 @@ public class PjzeromookBoardVO {
 	private String board_likeYN;
 	/*댓글 수*/
 	private int board_commentCnt;
+	/*프로필 사진*/
+	private String user_realfname;
 	/*파일*/
 	MultipartFile file;
 	
@@ -57,7 +59,7 @@ public class PjzeromookBoardVO {
 			this.board_realfname = uuid.toString() + "_" + board_fname;
 			// 해당 경로로 변경
 			//b_fname을 b_realfname으로 변경
-			File f = new File("D:/workspace/Project/src/main/webapp/resources/image/board/" + board_realfname);
+			File f = new File("C:/Users/user/git/mk_gram/Project/src/main/webapp/resources/image/board/" + board_realfname);
 			//여기 경로를 실제 서버에서 할때는 바꿔야함----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			try {
 				file.transferTo(f);
@@ -139,5 +141,11 @@ public class PjzeromookBoardVO {
 	}
 	public void setBoard_commentCnt(int board_commentCnt) {
 		this.board_commentCnt = board_commentCnt;
+	}
+	public String getUser_realfname() {
+		return user_realfname;
+	}
+	public void setUser_realfname(String user_realfname) {
+		this.user_realfname = user_realfname;
 	}
 }

@@ -26,6 +26,8 @@ public interface PjzeromookUserService {
 	public List<PjzeromookUserVO> PjzeromookFriendRecommend(PjzeromookUserVO vo);
 	//친구 수
 	public int PjzeromookUserCnt(PjzeromookUserVO vo);
+	//내정보 수정
+	public int pjzeromookUserInfoUpdate(PjzeromookUserVO vo);
 
 	
 }

@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="PjzeromookUserDAO.PjzeromookUserJoinEmailCheck" parameterType="UserVO" resultType="int">
 		SELECT COUNT(*)
 		  FROM USER
-		 WHERE USER_ID = #{user_email}
+		 WHERE USER_EMAIL = #{user_email}
 	</select>
 
 	<!-- 
@@ -188,5 +188,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  	  FROM FRIEND
 	  	 WHERE user_id = #{user_id}
 	  </select>
+	  
+	  
+	  
+	  <!-- 
+	  	내정보 수정
+	   -->
+	  <update id="PjzeromookUserDAO.pjzeromookUserInfoUpdate" parameterType="UserVO">
+	  	UPDATE USER
+	  	   SET  user_name = #{user_name}
+	  	       ,user_id = #{user_id}
+	  	       ,user_email = #{user_email}
+	  	       , user_phone = #{user_phone}
+	  	       , user_zipcode = #{user_zipcode}
+	  	       , user_address = #{user_address}
+	  	       , user_detail_address = #{user_detail_address}
+	  	       , user_extra_address = #{user_extra_address}
+	  	       <if test="user_password neq ''.toString()">
+	  	       , user_password = #{user_password}
+	  	       </if>
+	  	       <if test="user_fname neq ''.toString()">
+	  	       , user_fname = #{user_fname}
+	  	       , user_realfname = #{user_realfname}
+	  	       , user_fsize = #{user_fsize}
+	  	       </if>
+	  	 WHERE user_id = #{sessionUser_id}
+	  </update>
+	  
 	 
 </mapper>

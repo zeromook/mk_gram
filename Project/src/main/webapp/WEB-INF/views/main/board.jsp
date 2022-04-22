@@ -403,7 +403,43 @@
 	    </div>
 	    
 	    <div class="section">
-	    	<div class="main"></div>
+	    	<div class="main">
+	    		<div class="board" style="height:600px;width:600px;margin:0 auto;border:solid 1px lightgrey;margin-top:30px;border-radius:3%;">
+	    			<div class="userBOX" style="height:5%;display:flex;margin-left:7px;align-content:center;align-items: center;">
+	    				<img class="profile_img" src="/resources/image/user/defaultProfile.jpg" >
+	    				<span>zero-mook</span>
+	    			</div>
+	    			<div class="imgBOX" style="height:60%;background-image: url(/resources/image/board/test.jpg);background-size:600px 360px;">
+	    			</div>
+	    			<div class="btnBOX" style="height:4%;margin-left:4px;">
+	    				<i class="far fa-heart" id="likeBtn" style="margin-right:7px;cursor:pointer;">
+	                		<img src="/resources/image/likeBtnN.png" >
+	                	</i>
+	                	<i class="far fa-send" id="sendBtn" style="cursor:pointer;">
+	                		<img src="/resources/image/send.png" >
+	                	</i>
+	    			</div>
+	    			<div class="cnBOX" style="height:23%;margin-left:4px;">
+						<p style="margin-top:0px;">
+							좋아요 <span>1302</span>개
+						</p>
+						<p style="font-family:'GmarketLight';">
+							<span style="font-family:'GmarketBold';">zero-mook</span>
+							이것은 test내용 css잡기를 위함임 이것은 test 내용 css 잡기를 위함임 룽삥뽕
+						</p>
+						<p style="margin-bottom:2px;">
+							댓글<span>31</span>개 모두보기
+						</p>
+						<p style="margin-top:0px;font-size:11px;color:grey;">
+							2022/04/22
+						</p>
+	    			</div>
+	    			<div class="commentBOX" style="height:6%;margin-left:6px;">
+	    				<input type="text" placeholder="댓글달기" style="border:none;width:90%;height:100%;font-size:18px;border-bottom:solid 1px grey;">
+	    				<span style="color:skyblue;">게시</span>
+	    			</div>
+	    		</div>
+	    	</div>
 	    	<div class="side">
 	    		<div class="profile">
 	    		      <c:choose>

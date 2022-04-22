@@ -95,6 +95,99 @@ input{
 	width:100%;
 	font-family: GmarketMiddle;
 }
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+
+/* 12 */
+.btn-12{
+  position: relative;
+  right: 20px;
+  bottom: 20px;
+  border:none;
+  box-shadow: none;
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  -webkit-perspective: 230px;
+  perspective: 230px;
+}
+.btn-12 span {
+  background: rgb(0,172,238);
+background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  display: block;
+  position: absolute;
+  width: 130px;
+  height: 40px;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  border-radius: 5px;
+  margin:0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.btn-12 span:nth-child(1) {
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12 span:nth-child(2) {
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12:hover span:nth-child(1) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.btn-12:hover span:nth-child(2) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+ color: transparent;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -242,10 +335,6 @@ input{
 			})//end of ajax
 		})//end of addBoardSaveBtn click
 
-		$("input").on("keyup", function() {
-			btnActivate();
-		})//end of input keyup
-
 		/**
 		이메일 중복 체크 function
 		 */
@@ -263,13 +352,14 @@ input{
 					user_email : inputUser_email
 				},
 				success : function(ResultMessage) {
-					console.log(ResultMessage);
 					if (ResultMessage == "SUCCESS") {
-						$("#email_checkSpan").text("이미 존재하는 이메일입니다.");
-						$("#email_check").val("0");
+						$("#emailcheckSpan").text("이미 존재하는 이메일입니다.");
+						$("#emailcheckSpan").css("color", "red");
+						$("#emailcheck").val("0");
 					} else {
-						$("#email_checkSpan").text("사용가능한 이메일입니다.");
-						$("#email_check").val("1");
+						$("#emailcheckSpan").text("사용가능한 이메일입니다.");
+						$("#emailcheckSpan").css("color", "blue");
+						$("#emailcheck").val("1");
 					}
 				},
 				error : function(e) {
@@ -281,13 +371,14 @@ input{
 		/**
 		아이디 중복 체크 function
 		 */
-		$("#user_id").on("keyup", function() {
+		$("#user_idip").on("keyup", function() {
 			var inputUser_id = $(this).val();
 			if (inputUser_id == "") {
 				$("#id_checkSpan").text("");
 				$("#id_check").val("0");
 				return;
 			}
+			console.log(inputUser_id + "  아이디체크  ===== 보내는 아이디")
 			$.ajax({
 				type : "post",
 				url : 'idCheck.do',
@@ -295,12 +386,15 @@ input{
 					user_id : inputUser_id
 				},
 				success : function(ResultMessage) {
+					console.log("아이디---"+inputUser_id+"   아이디체크"+ResultMessage)
 					if (ResultMessage == "SUCCESS") {
-						$("#id_checkSpan").text("이미 존재하는 아이디입니다.");
-						$("#id_check").val("0");
+						$("#idcheckSpan").text("이미 존재하는 아이디입니다.");
+						$("#idcheckSpan").css("color", "red");
+						$("#idcheck").val("0");
 					} else {
-						$("#id_checkSpan").text("사용가능한 아이디입니다.");
-						$("#id_check").val("1");
+						$("#idcheckSpan").text("사용가능한 아이디입니다.");
+						$("#idcheckSpan").css("color", "blue");
+						$("#idcheck").val("1");
 					}
 				},
 				error : function(e) {
@@ -308,6 +402,44 @@ input{
 				}
 			})//end of ajax
 		})//end of user_email keyup
+
+
+
+        
+		/**
+			현재 비밀번호 확인 체크 funtction
+		*/
+        $("#nowPW").on("keyup",function(){
+			var password = $("#nowPW").val();
+			if($.trim(password) == ""){
+				$("#nowPW").text("");
+				$("#password_check").val("0");
+				return;
+			}
+			$.ajax({
+				type : "post",
+				url : 'chkPassword.do',
+				data : {
+					password : password
+				},
+				success : function(ResultMessage) {
+					console.log(ResultMessage);
+					if (ResultMessage == "SUCCESS") {
+						$("#password_check").val("1");
+						$("#nowPWTR").css("display","table-row");
+					} else {
+						$("#password_check").val("0");
+						$("#nowPWTR").css("display","none");
+					}
+				},
+				error : function(e) {
+					alert("error");
+				}
+			})//end of ajax
+		})//end of nowPW keyup
+		
+
+
 
 		/**
 			비밀번호 확인 체크 function
@@ -327,7 +459,52 @@ input{
 		})//end of userId keyup
 
 		
-		
+		//내정보 수정버튼
+		$("#myInfoEditBtn").click(function(){
+			var idcheck = $("#idcheck").val();
+			var emailcheck = $("#emailcheck").val();
+			var password_check = $("#password_check").val();
+			if(idcheck == "0"){
+				alert("아이디 중복확인을 해주세요.");
+				$("#idcheck").focus();
+				return;
+			}
+			if(emailcheck == "0"){
+				alert("이메일 중복확인을 해주세요.");
+				$("#emailcheck").focus();
+				return;
+			}
+			if(password_check == "0"){
+				if(!$.trim($("#user_password").val()) == ""){
+					alert("Password 중복확인을 해주세요.");
+					$("#password_check").focus();
+					return;
+				}
+			}
+			var infoFrm = $("#intofrm").serialize();
+			var form = $("#intofrm")[0];
+			var formData = new FormData(form);
+			console.log(formData);
+			$.ajax({
+				type : "post",
+				url : 'updateMyInfo.do',
+				data : formData,
+				cache : false,
+				contentType: false,
+				processData: false,
+				success : function(ResultMessage) {
+					if (ResultMessage == "SUCCESS") {
+						alert("정보 수정이 완료되었습니다.");
+						location.reload();//새로고침
+					} else {
+						alert("수정 실패! 관리자에게 문의하세요.")
+					}
+				},
+				error : function(e) {
+					alert("error");
+				}
+			})//end of ajax
+		})//end of myInfoEditBtn click
 		
 		
 		
@@ -544,7 +721,7 @@ input{
 			<div class="header_bar">
 				<input class="search_bar" type="text" placeholder="검색" /> <img
 					id="searchimg"
-					src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+					src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" style="top:20px;">
 			</div>
 			<div class="icons">
 				<i class="fas fa-home" id="homeBtn"> <img
@@ -613,7 +790,7 @@ input{
 		</div>
 	</div>
 	<div id="editbox" style="width:30%;margin: 0 auto;padding-top:100px;">
-		<form>
+		<form id="intofrm"  method="post" enctype="multipart/form-data">
 			<table style="width: 100%;">
 				<tr>
 					<td id="pi" style="text-align:center;" colspan="2">
@@ -627,13 +804,14 @@ input{
 									style="border-radius: 70%; width: 45%;">
 							</c:otherwise>
 						</c:choose>
-						${user.user_id}
-						<br>
-						<label className="input-file-btn" for="file" style="background-image: linear-gradient(to left, #00b0ff 0%, #00e676 100%);border-radius:4px;font-size:5px;padding:3px;cursor:pointer;">
-							프로필사진 바꾸기
-						</label>
-						<input type="file" name="file" id="file" onchange="setThumbnail(event);" style="display:none;">
-						<input type="hidden" id="profileEditStatus" value="0">
+						<div style="display:flex;flex-direction:column;align-items:center;">
+							<span style="font-size:18px;">${user.user_id}</span>
+							<label className="input-file-btn" for="file" style="background-image: linear-gradient(to left, #00b0ff 0%, #00e676 100%);border-radius:4px;font-size:5px;padding:3px;cursor:pointer;">
+								프로필사진 바꾸기
+							</label>
+							<input type="file" name="file" id="file" onchange="setThumbnail(event);" style="display:none;">
+							<input type="hidden" id="profileEditStatus" value="0">
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -649,13 +827,13 @@ input{
 						 <span>아이디</span>
 					</td>
 					<td>
-						<input type="text" name="user_id" value="${user.user_id}">
+						<input type="text" id="user_idip" name="user_id" value="${user.user_id}">
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td colspan="2">
 						 <span id="idcheckSpan"></span>
-						 <input type="hidden" id="idcheck" value="0">
+						 <input type="hidden" id="idcheck" value="1">
 					</td>
 				</tr>
 				<tr>
@@ -663,13 +841,13 @@ input{
 						<span>이메일</span>
 					</td>
 					<td>
-						<input type="text" value="${user.user_email}">
+						<input type="text" id="user_email" name="user_email" value="${user.user_email}">
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td colspan="2">
 						<span id="emailcheckSpan"></span>
-						<input type="hidden" id="emailcheck" value="0">
+						<input type="hidden" id="emailcheck" value="1">
 					</td>
 				</tr>
 				<tr>
@@ -709,10 +887,10 @@ input{
 						<span>비밀번호</span>
 					</td>
 					<td>
-						<input type="password" placeholder="이전 비밀번호" style="width:45%;">
+						<input type="password" id="nowPW" placeholder="이전 비밀번호" style="width:45%;">
 					</td>
 				</tr>
-				<tr>
+				<tr id="nowPWTR" style="display: none;">
 					<td></td>
 					<td>
 						<input type="password" name="user_password" id="user_password" placeholder="사용할 PassWord" style="width:46%;margin-top:0px;"> 
@@ -724,6 +902,16 @@ input{
 						<span id="password_checkSpan"></span>
 						<input type="hidden" id="password_check" value="0">
 					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="myInfoEditBtn" style="text-align:center;">
+							<button class="custom-btn btn-12">
+								<span>Click!</span>
+								<span>내정보 수정</span>
+							</button>
+						</div>
+					</td>				
 				</tr>
 				
 			</table>

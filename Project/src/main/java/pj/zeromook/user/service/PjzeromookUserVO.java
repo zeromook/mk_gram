@@ -34,6 +34,8 @@ public class PjzeromookUserVO {
 	private long user_fsize;
 	/* 친구신청한 유저 아이디*/
 	private String friend_id;
+	/* session값 유저 아이디*/
+	private String sessionUser_id;
 	
 	MultipartFile file;
 	
@@ -80,9 +82,7 @@ public class PjzeromookUserVO {
 			this.user_realfname = uuid.toString() + "_" + user_fname;
 			// 해당 경로로 변경
 			//b_fname을 b_realfname으로 변경
-			File f = new File("/Project/resources/image/user/"+user_realfname);
-			System.out.println(f.getAbsolutePath());
-			//여기 경로를 실제 서버에서 할때는 바꿔야함----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			File f = new File("C:/Users/user/git/mk_gram/Project/src/main/webapp/resources/image/user/"+user_realfname);
 			try {
 				file.transferTo(f);
 			} catch (IllegalStateException e) {				
@@ -173,6 +173,12 @@ public class PjzeromookUserVO {
 	}
 	public void setAllShowInvitedYN(String allShowInvitedYN) {
 		this.allShowInvitedYN = allShowInvitedYN;
+	}
+	public String getSessionUser_id() {
+		return sessionUser_id;
+	}
+	public void setSessionUser_id(String sessionUser_id) {
+		this.sessionUser_id = sessionUser_id;
 	}
 	
 }

@@ -446,7 +446,7 @@
 				<c:otherwise>
 					<img class="profileImg"
 						src="/resources/image/user/${user.user_realfname}"
-						style="border-radius: 70%; width: 38%; margin-right: 15px;">
+						style="border-radius: 70%; width: 140px; margin-right: 15px;">
 				</c:otherwise>
 			</c:choose>
 			<div id="uinfo" style="margin-left: 35px; font-size: 20px;">

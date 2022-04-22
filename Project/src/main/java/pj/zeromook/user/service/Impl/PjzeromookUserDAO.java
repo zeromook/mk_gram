@@ -108,5 +108,15 @@ public class PjzeromookUserDAO {
 		return result;
 	}
 
+	/**
+	 * 내정보 수정
+	 * */
+	public int pjzeromookUserInfoUpdate(PjzeromookUserVO vo){
+		int result = mybatis.update("PjzeromookUserDAO.pjzeromookUserInfoUpdate",vo);
+		return result;
+	}
+	
+	
+	
 	
 }

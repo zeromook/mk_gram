@@ -48,8 +48,10 @@ public class PjzeromookBoardController {
 	
 	//친구검색 팝업창
 	@RequestMapping("pj/zeromook/main/searchFriendPop.do")
-	public String goToTheSearchFriendPopup(@RequestParam(value = "user_id", required = true) String user_id, Model m){
+	public String goToTheSearchFriendPopup(@RequestParam(value = "user_id", required = true) String user_id, Model m,HttpSession session){
+		PjzeromookUserVO user = (PjzeromookUserVO) session.getAttribute("user");
 		m.addAttribute("user_id",user_id);
+		m.addAttribute("user",user);
 		return "main/searchFriendPop";
 	}
 	
@@ -117,6 +119,7 @@ public class PjzeromookBoardController {
 		user.setAllShowInvitedYN("Y");
 		List<PjzeromookUserVO> friendInviteList = UserService.PjzeromookReceivedFriendInvite(user);
 		m.addAttribute("friendInviteList",friendInviteList);
+		m.addAttribute("user",user);
 		return "main/friendInviteListPop";
 	}
 	

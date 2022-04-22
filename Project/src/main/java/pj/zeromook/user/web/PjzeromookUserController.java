@@ -186,4 +186,26 @@ public class PjzeromookUserController {
 		return "user/editMyInfo";
 	}
 	
+	
+	//내정보 수정
+	@RequestMapping("pj/zeromook/user/updateMyInfo.do")
+	@ResponseBody
+	public String PjzeromookUpdateMyInfo(@ModelAttribute("PjzeromookUserVO")PjzeromookUserVO vo,HttpSession session){
+		ResultVO resultVO = new ResultVO();
+		PjzeromookUserVO user = (PjzeromookUserVO) session.getAttribute("user");
+		vo.setSessionUser_id(user.getUser_id());
+		int updateInfo = 0;
+		try{
+			updateInfo = UserService.pjzeromookUserInfoUpdate(vo);
+			if(updateInfo > 0){
+				resultVO.setResultMessage("SUCCESS");
+			}else{
+				resultVO.setResultMessage("FAIL");
+			}
+		}catch(Exception e){
+			resultVO.setResultMessage("ERROR");
+		}
+		return resultVO.getResultMessage();
+	}
+	
 }
